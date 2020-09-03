@@ -1,32 +1,35 @@
 const Sequelize = require('sequelize');
+const {
+  DataTypes
+} = require("sequelize");
 const db = require('../config/db');
-const User = require('./User');
+const UserDbo = require('./UserDbo');
 
 const UserFbData = db.define('userFbData', {
   // attributes
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
   },
   userId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER.UNSIGNED,
     references: 'users',
     referencesKey: 'id'
   },
   fbUserId: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   }
 });
 
 // Option 1
-User.hasOne(UserFbData, {
+UserDbo.hasOne(UserFbData, {
   foreignKey: 'userId'
 });
-UserFbData.belongsTo(User);
+UserFbData.belongsTo(UserDbo);
 
 
 

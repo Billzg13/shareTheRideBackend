@@ -1,36 +1,39 @@
 const Sequelize = require('sequelize');
+const {
+  DataTypes
+} = require("sequelize");
 const db = require('../config/db');
-const User = require('./User');
+const UserDbo = require('./UserDbo');
 
 const UserEmailData = db.define('userEmailData', {
   // attributes
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
   },
   userId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER.UNSIGNED,
     references: 'users',
     referencesKey: 'id'
   },
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   },
   password: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   }
 });
 
 // Option 1
-User.hasOne(UserEmailData, {
+UserDbo.hasOne(UserEmailData, {
   foreignKey: 'userId'
 });
-UserEmailData.belongsTo(User);
+UserEmailData.belongsTo(UserDbo);
 
 
 module.exports = UserEmailData;

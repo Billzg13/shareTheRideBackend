@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('./async');
 const ErrorResponse = require('../utils/errorResponse');
-const User = require('../models/User');
+const UserDbo = require('../dbmodels/UserDbo');
 
 // Protect routes
 exports.protect = asyncHandler(async (req, res, next) => {
@@ -26,8 +26,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log('decoded: ');
     console.log(decoded)
-    req.user = await User.findByPk(decoded.userId);
-    console.log('THis is the user inside auth middleware: ' + req.user)
+    req.user = await UserDbo.findByPk(decoded.userId);
+    //console.log('THis is the user inside auth middleware: ' + req.user)
     next();
   } catch (err) {
     return next(new ErrorResponse('Not authorized to access this route', 401));
