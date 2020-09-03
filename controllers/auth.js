@@ -1,8 +1,8 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-const User = require('../models/User');
-const UserEmailData = require('../models/UserEmailData');
-const UserFbData = require('../models/UserFbData');
+const UserDbo = require('../dbmodels/UserDbo')
+const UserEmailData = require('../dbmodels/UserEmailData');
+const UserFbData = require('../dbmodels/UserFbData');
 const jwt = require('jsonwebtoken');
 
 // @desc      Register user
@@ -13,7 +13,11 @@ exports.register = asyncHandler(async (req, res, next) => {
     type,
     fbUserId,
     email,
-    password
+    password,
+    firstName,
+    lastName,
+    dateOfBirth,
+    gender
   } = req.body;
   if (type === 'fb') {
     if (await UserFbData.findOne({
@@ -23,8 +27,14 @@ exports.register = asyncHandler(async (req, res, next) => {
       })) {
       return next(new ErrorResponse('user already exists', 403));
     }
-    const user = await User.create({
-      type: "fb"
+    const user = await UserDbo.create({
+      type: "fb",
+      email,
+      firstName,
+      lastName,
+      dateOfBirth,
+      gender,
+      age: 23
     });
     console.log(user)
     const userFbData = await UserFbData.create({
@@ -40,8 +50,14 @@ exports.register = asyncHandler(async (req, res, next) => {
       })) {
       return next(new ErrorResponse('user already exists', 403));
     }
-    const user = await User.create({
-      type: "email"
+    const user = await UserDbo.create({
+      type: "email",
+      email,
+      firstName,
+      lastName,
+      dateOfBirth,
+      gender,
+      age: 23
     });
     const userEmailData = await UserEmailData.create({
       userId: user.id,

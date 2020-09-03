@@ -9,6 +9,7 @@ const {
 
 //import routers
 const auth = require('./routers/auth');
+const ride = require('./routers/ride');
 
 // Load env vars
 dotenv.config({
@@ -35,7 +36,10 @@ app.use(express.json());
 
 //routes for auth
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/rides', ride);
+
 app.get('/protected', protect, (req, res, next) => {
+  console.log(req.user.firstName)
   res.status(200).json({
     protected: "yes",
     user: req.user

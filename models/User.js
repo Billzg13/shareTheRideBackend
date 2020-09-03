@@ -1,22 +1,17 @@
-const Sequelize = require('sequelize');
-const db = require('../config/db');
+const UserDbo = require('../dbmodels/UserDbo')
 
+function User() {
+  this.tableName = "users";
+}
+module.exports = new User();
 
-const User = db.define('users', {
-  // attributes
-  id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  type: {
-    type: Sequelize.STRING,
-    allowNull: false
+//still testing this
+User.prototype.createUser = async function (user) {
+  if (!user) {
+    //do something 
+    //UserDbo.
+    return;
   }
-}, {
-  // The `timestamps` field specify whether or not the `createdAt` and `updatedAt` fields will be created.
-  timestamps: true
-});
 
-module.exports = User;
+  return;
+};
