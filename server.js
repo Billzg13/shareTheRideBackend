@@ -6,6 +6,7 @@ const {
   protect,
   authorize
 } = require('./middleware/auth');
+var cors = require('cors')
 
 //import routers
 const auth = require('./routers/auth');
@@ -24,6 +25,8 @@ db.authenticate()
 
 //express app init
 const app = express();
+
+app.use(cors())
 
 //dev logging
 if (process.env.NODE_ENV == 'development') {
