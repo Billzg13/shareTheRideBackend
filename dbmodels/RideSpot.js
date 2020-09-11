@@ -35,15 +35,10 @@ const RideSpot = db.define('rideSpots', {
     allowNull: false,
     //add default here ?
   },
-  approved: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    //add default here = false
-  },
   spots: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    //add default value here =1
+    defaultValue: 1
   },
   comments: {
     type: DataTypes.STRING,

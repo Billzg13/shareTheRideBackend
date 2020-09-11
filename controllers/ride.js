@@ -2,7 +2,6 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const UserDbo = require('../dbmodels/UserDbo');
 const User = require('../models/User');
-const RideDbo = require('../models/Ride')
 const Ride = require('../models/Ride');
 
 /**
@@ -14,7 +13,7 @@ exports.createNewRide = asyncHandler(async (req, res, next) => {
     spots,
     when,
     from,
-    destination,
+    to,
     gasMoney,
     comments,
     pets
@@ -23,7 +22,7 @@ exports.createNewRide = asyncHandler(async (req, res, next) => {
   let newRide = {
     userId: user.id,
     from,
-    destination,
+    to,
     when,
     spots,
     gasMoney,
@@ -95,16 +94,16 @@ exports.deleteRide = asyncHandler(async (req, res, next) => {
 
 exports.findRide = asyncHandler(async (req, res, next) => {
 
-  if (!req.query.from || !req.query.destination || !req.query.when)
+  if (!req.query.from || !req.query.to || !req.query.when)
     return next(new ErrorResponse('i dont know what to search', 400));
 
   const {
     from,
-    destination,
+    to,
     when
   } = req.query;
 
-  const result = await Ride.findRide(from, destination, when);
+  const result = await Ride.findRide(from, to, when);
 
   res.status(200).json({
     route: 'findRide',

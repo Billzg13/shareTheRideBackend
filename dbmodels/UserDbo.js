@@ -31,8 +31,7 @@ const UserDbo = db.define('users', {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
-    unique: true
+    allowNull: true
   },
   gender: {
     type: DataTypes.STRING,
@@ -46,5 +45,6 @@ const UserDbo = db.define('users', {
   // The `timestamps` field specify whether or not the `createdAt` and `updatedAt` fields will be created.
   timestamps: true
 });
+
 
 module.exports = UserDbo;

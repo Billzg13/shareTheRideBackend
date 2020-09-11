@@ -24,7 +24,7 @@ const RideDbo = db.define('rides', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  destination: {
+  to: {
     type: DataTypes.STRING,
     allowNull: false
   },
