@@ -31,10 +31,7 @@ exports.register = asyncHandler(async (req, res, next) => {
       type: "fb",
       email,
       firstName,
-      lastName,
-      dateOfBirth,
-      gender,
-      age: 23
+      lastName
     });
     console.log(user)
     const userFbData = await UserFbData.create({
