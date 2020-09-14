@@ -14,7 +14,7 @@ exports.createNewRide = asyncHandler(async (req, res, next) => {
     when,
     from,
     to,
-    gasMoney,
+    gassMoney,
     comments,
     pets
   } = req.body;
@@ -25,7 +25,7 @@ exports.createNewRide = asyncHandler(async (req, res, next) => {
     to,
     when,
     spots,
-    gasMoney,
+    gassMoney,
     comments,
     pets
   };
