@@ -93,17 +93,17 @@ exports.deleteRide = asyncHandler(async (req, res, next) => {
 });
 
 exports.findRide = asyncHandler(async (req, res, next) => {
-
-  if (!req.query.from || !req.query.to || !req.query.when)
-    return next(new ErrorResponse('i dont know what to search', 400));
-
   const {
     from,
     to,
-    when
-  } = req.query;
+    when,
+    spots
+  } = req.body;
 
-  const result = await Ride.findRide(from, to, when);
+  if (!from || !to || !when || !spots)
+    return next(new ErrorResponse('i dont know what to search', 400));
+
+  const result = await Ride.findRide(from, to, when, spots);
 
   res.status(200).json({
     route: 'findRide',

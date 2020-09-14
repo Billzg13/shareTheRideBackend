@@ -33,7 +33,7 @@ Ride.prototype.getMyRides = async (userId) => {
 }
 // SELECT * FROM rides WHERE userId = ?;
 
-Ride.prototype.findRide = async (from, to, when) => {
+Ride.prototype.findRide = async (from, to, when, spots) => {
   return await RideDbo.findAll({
     where: {
       from,
