@@ -36,7 +36,7 @@ const RideDbo = db.define('rides', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  gasMoney: {
+  gassMoney: {
     type: DataTypes.BOOLEAN,
     allowNull: true
   },
