@@ -4,6 +4,7 @@ const UserDbo = require('../dbmodels/UserDbo')
 const UserEmailData = require('../dbmodels/UserEmailData');
 const UserFbData = require('../dbmodels/UserFbData');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 // @desc      Register user
 // @route     POST /api/v1/auth/register
@@ -16,7 +17,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     password,
     firstName,
     lastName,
-    dateOfBirth,
+    age,
     gender
   } = req.body;
   if (type === 'fb') {
@@ -52,9 +53,8 @@ exports.register = asyncHandler(async (req, res, next) => {
       email,
       firstName,
       lastName,
-      dateOfBirth,
       gender,
-      age: 23
+      age
     });
     const userEmailData = await UserEmailData.create({
       userId: user.id,
@@ -109,7 +109,9 @@ exports.login = asyncHandler(async (req, res, next) => {
     if (!userEmailData) {
       return next(new ErrorResponse('bad credentials', 401));
     }
-    if (password === userEmailData.password) {
+    //  if (password === userEmailData.password) {
+
+    if (bcrypt.compare(password, userEmailData.password)) {
       //so if we are here the email and password are correct
       //return the jwt here
       res.status(200).json({

@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const {
   DataTypes
 } = require("sequelize");
+const bcrypt = require('bcrypt');
 const db = require('../config/db');
 const UserDbo = require('./UserDbo');
 
@@ -27,6 +28,12 @@ const UserEmailData = db.define('userEmailData', {
     type: DataTypes.STRING,
     allowNull: false
   }
+});
+
+UserEmailData.beforeCreate(async (userEmailData, options) => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(userEmailData.password, salt);
+  userEmailData.password = hashedPassword;
 });
 
 // Option 1
