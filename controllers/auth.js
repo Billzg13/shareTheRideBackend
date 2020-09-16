@@ -5,6 +5,7 @@ const UserEmailData = require('../dbmodels/UserEmailData');
 const UserFbData = require('../dbmodels/UserFbData');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const User = require('../models/User');
 
 // @desc      Register user
 // @route     POST /api/v1/auth/register
@@ -127,10 +128,89 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 });
 
+// @desc      when a user forgets his password
+// @route     POST /api/v1/auth/forgot/password
+// @access    Public
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  const {
+    email
+  } = req.body;
+  if (!email) return next(new ErrorResponse('no email provided', 400));
+
+  //find userEmailData by email
+  const userEmailData = await User.findUserByEmail(email);
+  if (!userEmailData) return next(new ErrorResponse('cant find the email', 400));
+
+  //generate new random password
+  const newPassword = makeId(8);
+  userEmailData.password = newPassword;
+  //save the new password
+  await userEmailData.save();
+
+  res.status(200).json({
+    success: true,
+    message: "please check your emails"
+  });
+  //send the new password to his email
+  //return 200 success
+});
+
+// @desc      Change password for the user
+// @route     POST /api/v1/auth/change/pass
+// @access    Private
+exports.changePassword = asyncHandler(async (req, res, next) => {
+  const {
+    oldPassword,
+    newPassword
+  } = req.body;
+  const userId = req.user.id;
+
+
+  const userEmailData = await User.findByUserId(userId);
+  if (!userEmailData) return next(new ErrorResponse('user doesnt exist?', 400));
+
+  if (bcrypt.compare(oldPassword, userEmailData.password)) {
+    userEmailData.password = newPassword;
+    await userEmailData.save();
+    res.status(200).json({
+      success: true,
+      message: "password changed"
+    });
+  }
+  return next(new ErrorResponse('wrong password', 401));
+
+
+  //we find the userEmailData with email and password
+  //we then store the new password userEmailData.password
+  //save the 
+})
+
+//creates the jwt
 signJwt = (userId) => {
   return jwt.sign({
     userId
   }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE
   });
+}
+
+
+//this function is used to generate random password with desired length
+makeId = (length) => {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+sendEmail = (email, body) => {
+  const message = {
+    from: 'elonmusk@tesla.com', // Sender address
+    to: 'to@email.com', // List of recipients
+    subject: 'Design Your Model S | Tesla', // Subject line
+    text: body // Plain text body
+  };
 }
