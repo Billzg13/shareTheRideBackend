@@ -1,11 +1,9 @@
-const Sequelize = require('sequelize');
 const {
   DataTypes
 } = require("sequelize");
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
 const UserDbo = require('./UserDbo');
-const User = require('../models/User');
 
 const UserEmailData = db.define('userEmailData', {
   // attributes
@@ -47,7 +45,6 @@ UserEmailData.beforeSave(async (userEmailData, options) => {
     userEmailData.password = hashedPassword;
   }
 });
-
 
 
 // Option 1

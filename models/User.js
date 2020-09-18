@@ -29,7 +29,11 @@ User.prototype.findUserByEmail = async (email) => {
 }
 
 User.prototype.findByUserId = async (userId) => {
-  const userEmailData = await UserEmailData.findByPk(userId);
+  const userEmailData = await UserEmailData.findOne({
+    where: {
+      userId
+    }
+  });
   if (!userEmailData) return null;
 
   return userEmailData;

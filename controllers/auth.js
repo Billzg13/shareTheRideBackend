@@ -112,7 +112,8 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
     //  if (password === userEmailData.password) {
 
-    if (bcrypt.compare(password, userEmailData.password)) {
+    if (await bcrypt.compare(password, userEmailData.password)) {
+
       //so if we are here the email and password are correct
       //return the jwt here
       res.status(200).json({
@@ -165,13 +166,15 @@ exports.changePassword = asyncHandler(async (req, res, next) => {
   } = req.body;
   const userId = req.user.id;
 
-
+  console.log('in changePassword')
   const userEmailData = await User.findByUserId(userId);
   if (!userEmailData) return next(new ErrorResponse('user doesnt exist?', 400));
 
-  if (bcrypt.compare(oldPassword, userEmailData.password)) {
+  if (await bcrypt.compare(oldPassword, userEmailData.password)) {
     userEmailData.password = newPassword;
     await userEmailData.save();
+    console.log('after userEmaildata.save()');
+    console.log('with password: ' + userEmailData.password)
     res.status(200).json({
       success: true,
       message: "password changed"
@@ -195,7 +198,7 @@ signJwt = (userId) => {
 }
 
 
-//this function is used to generate random password with desired length
+//this function is used to generate random password with any length
 makeId = (length) => {
   var result = '';
   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -206,6 +209,8 @@ makeId = (length) => {
   return result;
 }
 
+
+//send email util, maybe dont have this function here since it could be used widely
 sendEmail = (email, body) => {
   const message = {
     from: 'elonmusk@tesla.com', // Sender address
