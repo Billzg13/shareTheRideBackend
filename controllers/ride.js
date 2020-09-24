@@ -51,6 +51,7 @@ exports.getAllRides = asyncHandler(async (req, res, next) => {
 });
 
 exports.bookSpot = asyncHandler(async (req, res, next) => {
+  console.log('in bookSpot');
   //1. get spots, rideId, driverId from req.body check
   //2. get the userId that wants to book many/single spots/spot check
   //3. we update the table rideSpots with the entry check

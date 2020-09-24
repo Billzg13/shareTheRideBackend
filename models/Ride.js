@@ -50,10 +50,12 @@ Ride.prototype.findRide = async (from, to, when, spots) => {
 // SELECT * FROM rides WHERE from = ? AND to = ? and when = ? and spots > 0;
 
 Ride.prototype.bookSpot = async (newBooking) => {
+  console.log('in rideSpot');
   return await RideSpot.create(newBooking);
 }
 
 Ride.prototype.updateSpots = async (rideId, spots) => {
+  console.log('in updateSpots');
   return await RideDbo.update({
     spots
   }, {

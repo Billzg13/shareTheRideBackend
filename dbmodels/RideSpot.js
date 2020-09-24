@@ -61,4 +61,4 @@ RideDbo.hasMany(RideSpot, {
 });
 RideSpot.belongsTo(RideDbo);
 
-module.exports = RideDbo;
+module.exports = RideSpot;
