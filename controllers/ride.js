@@ -51,12 +51,13 @@ exports.getAllRides = asyncHandler(async (req, res, next) => {
 });
 
 exports.bookSpot = asyncHandler(async (req, res, next) => {
-  //1. get spots, rideId, driverId from req.body
-  //2. get the userId that wants to book many/single spots/spot
-  //3. we update the table rideSpots with the entry
-  //4. we update the table rides, substract ride.spots - req.body.spots
+  //1. get spots, rideId, driverId from req.body check
+  //2. get the userId that wants to book many/single spots/spot check
+  //3. we update the table rideSpots with the entry check
+  //4. we update the table rides, substract ride.spots - req.body.spots 
   //5. possible send email to the ride.userId that some1 booked a spot/spots to his ride  
   const {
+    oldSpots, //oldSpots tha the ride.spots had before we book them
     spots,
     rideId,
     driverId
@@ -75,9 +76,13 @@ exports.bookSpot = asyncHandler(async (req, res, next) => {
   const result = await Ride.bookSpot(rideSpot);
   if (result == null) return next(new ErrorResponse('something went wrong', 400))
 
+  const updateRide = await Ride.updateSpots(rideId, oldSpots - spots);
+  if (updateRide == null) return next(new ErrorResponse('cant update ride', 400))
+
   res.status(200).json({
     route: 'coverSpot',
     result,
+    updateRide,
     success: true
   });
 });
