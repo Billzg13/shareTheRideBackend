@@ -1,5 +1,6 @@
 const RideDbo = require('../dbmodels/RideDbo');
 const User = require('./User');
+const RideSpot = require('../dbmodels/RideSpot');
 
 function Ride() {
   this.tablename = "rides";
@@ -43,3 +44,11 @@ Ride.prototype.findRide = async (from, to, when, spots) => {
   });
 }
 // SELECT * FROM rides WHERE from = ? AND to = ? and when = ?;
+
+Ride.prototype.bookSpot = async (newBooking) => {
+  return await RideSpot.create(newBooking);
+}
+
+Ride.prototype.updateSpots = async (rideId, spots) => {
+  RideDbo
+}

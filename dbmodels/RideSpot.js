@@ -33,6 +33,7 @@ const RideSpot = db.define('rideSpots', {
   hasBaggage: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: true,
     //add default here ?
   },
   spots: {
