@@ -6,7 +6,7 @@ const {
 const {
   createNewRide,
   getAllRides,
-  coverSpot,
+  bookSpot,
   getSingleRide,
   getMyRides,
   cancelSpot,
@@ -19,8 +19,8 @@ router = express.Router();
 router.post('', protect, createNewRide);
 router.get('', protect, getAllRides);
 router.get('/me', protect, getMyRides);
-router.post('/find', protect, findRide);
-router.post('/spot/:rideId', protect, coverSpot);
+router.post('/find', findRide);
+router.post('/book', protect, bookSpot);
 router.get('/single/:rideId', protect, getSingleRide);
 router.delete('/delete/:rideId', protect, deleteRide);
 router.get('/cancel/:rideId', protect, cancelSpot);
