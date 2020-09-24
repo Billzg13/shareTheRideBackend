@@ -1,6 +1,7 @@
 const RideDbo = require('../dbmodels/RideDbo');
 const User = require('./User');
 const RideSpot = require('../dbmodels/RideSpot');
+const Sequelize = require('sequelize');
 
 function Ride() {
   this.tablename = "rides";
@@ -41,7 +42,7 @@ Ride.prototype.findRide = async (from, to, when, spots) => {
       to,
       when,
       spots: {
-        [Op.gt]: 0
+        [Sequelize.Op.gt]: 0
       }
     }
   });
