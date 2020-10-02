@@ -11,7 +11,8 @@ const {
   getMyRides,
   cancelSpot,
   deleteRide,
-  findRide
+  findRide,
+  getMyBookings
 } = require('../controllers/ride');
 
 router = express.Router();
@@ -21,6 +22,7 @@ router.get('', protect, getAllRides);
 router.get('/me', protect, getMyRides);
 router.post('/find', findRide);
 router.post('/book', protect, bookSpot);
+router.get('/bookings', protect, getMyBookings);
 router.get('/single/:rideId', protect, getSingleRide);
 router.delete('/delete/:rideId', protect, deleteRide);
 router.get('/cancel/:rideId', protect, cancelSpot);

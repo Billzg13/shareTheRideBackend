@@ -33,6 +33,14 @@ Ride.prototype.getMyRides = async (userId) => {
     }
   });
 }
+
+Ride.prototype.getMyBookings = async (userId) => {
+  return await RideSpot.findAll({
+    where: {
+      userId
+    }
+  })
+}
 // SELECT * FROM rides WHERE userId = ?;
 
 Ride.prototype.findRide = async (from, to, when, spots) => {

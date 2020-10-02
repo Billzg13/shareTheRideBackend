@@ -143,3 +143,19 @@ exports.findRide = asyncHandler(async (req, res, next) => {
     success: true
   });
 });
+
+
+exports.getMyBookings = asyncHandler(async (req, res, next) => {
+  const {
+    id
+  } = req.user;
+
+  const result = await Ride.getMyBookings(id);
+
+  res.status(200).json({
+    route: 'getMyBookings',
+    result,
+    success: true
+  });
+
+});
