@@ -3,6 +3,8 @@ const asyncHandler = require('../middleware/async');
 const UserDbo = require('../dbmodels/UserDbo');
 const User = require('../models/User');
 const Ride = require('../models/Ride');
+const RideDbo = require('../dbmodels/RideDbo');
+
 
 
 /**
@@ -33,6 +35,10 @@ exports.createNewRide = asyncHandler(async (req, res, next) => {
   const result = await Ride.createNewRide(newRide);
   if (result == null) return next(new ErrorResponse('something went wrong', 400))
 
+  //dont need this
+  //const redisResult = await Ride.cachRide(result);
+  //await Ride.testMulti(); <-- this works
+
   res.status(201).json({
     route: 'createNewRide',
     result,
@@ -50,13 +56,8 @@ exports.getAllRides = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.bookSpot = asyncHandler(async (req, res, next) => {
+exports.bookSpot = asyncHandler(async (req, res, next) => { //TODO refactor this it does more things than it should
   console.log('in bookSpot');
-  //1. get spots, rideId, driverId from req.body check
-  //2. get the userId that wants to book many/single spots/spot check
-  //3. we update the table rideSpots with the entry check
-  //4. we update the table rides, substract ride.spots - req.body.spots 
-  //5. possible send email to the ride.userId that some1 booked a spot/spots to his ride  
   const {
     oldSpots, //oldSpots tha the ride.spots had before we book them
     spots,

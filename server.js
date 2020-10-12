@@ -17,11 +17,14 @@ dotenv.config({
   path: './config/config.env'
 });
 
+//mysql
 const db = require('./config/db');
 db.authenticate()
   .then(() => console.log("Database connected"))
   .catch(err => console.log(err));
 
+//redis
+const client = require('./config/redis');
 
 //express app init
 const app = express();

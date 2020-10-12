@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+//TODO make this secure! , hide credentials
+
 
 // Option 1: Passing parameters separately
 module.exports = new Sequelize('sharetheride', 'root', '1q2w3e4r5t6y7u8i9o0p', {
@@ -10,5 +12,4 @@ module.exports = new Sequelize('sharetheride', 'root', '1q2w3e4r5t6y7u8i9o0p', {
     // This was true by default, but now is false by default
     timestamps: false
   },
-
 });

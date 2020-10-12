@@ -3,6 +3,10 @@ const {
   protect,
   authorize
 } = require('../middleware/auth');
+
+const {
+  cache
+} = require('../middleware/caching');
 const {
   createNewRide,
   getAllRides,
@@ -23,15 +27,9 @@ router.get('/me', protect, getMyRides);
 router.post('/find', findRide);
 router.post('/book', protect, bookSpot);
 router.get('/bookings', protect, getMyBookings);
-router.get('/single/:rideId', protect, getSingleRide);
+router.get('/single/:rideId', protect, cache, getSingleRide);
 router.delete('/delete/:rideId', protect, deleteRide);
 router.get('/cancel/:rideId', protect, cancelSpot);
-
-//create a ride
-//search for rides(dont return the whole object maybe)
-//get a spot for a ride
-//get a single ride
-//get my rides
 
 
 module.exports = router;
