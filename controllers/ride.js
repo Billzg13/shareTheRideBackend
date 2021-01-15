@@ -56,7 +56,7 @@ exports.getAllRides = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.bookSpot = asyncHandler(async (req, res, next) => { //TODO refactor this it does more things than it should
+exports.bookSpot = asyncHandler(async (req, res, next) => { //TODO refactor this, it does more things than it should
   console.log('in bookSpot');
   const {
     oldSpots, //oldSpots tha the ride.spots had before we book them

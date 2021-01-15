@@ -11,8 +11,14 @@ function Ride() {
 module.exports = new Ride();
 
 
+/**
+ * provided a Ride Object it creates a new ride in the database
+ * if it fails it returns null
+ * @param {Ride} ride 
+ */
 Ride.prototype.createNewRide = async (ride) => {
-  if (!ride) return null;
+  if (!ride || ride== null ) throw new Error('ride is null');
+
   try {
     const result = await RideDbo.create(ride);
     if (result) return result;
